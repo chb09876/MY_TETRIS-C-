@@ -1,0 +1,4 @@
+﻿  function.c
+C:\Users\82105\Documents\TETRIS\my_TETRIS\my_TETRIS\function.c(20,12): warning C4098: 'mainmenu': 'void' 함수에서 값을 반환하고 있습니다.
+C:\Users\82105\Documents\TETRIS\my_TETRIS\my_TETRIS\function.c(62,19): warning C4098: 'islose': 'void' 함수에서 값을 반환하고 있습니다.
+  my_TETRIS.vcxproj -> C:\Users\82105\Documents\TETRIS\my_TETRIS\Debug\my_TETRIS.exe
