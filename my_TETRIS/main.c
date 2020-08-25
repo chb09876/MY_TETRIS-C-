@@ -4,10 +4,8 @@
 #include <stdlib.h>
 #include <Windows.h>
 #include <string.h>
-#include <process.h>
-#include <conio.h>
 
-#include "component.h"
+
 #include "function_name.h"
 
 
