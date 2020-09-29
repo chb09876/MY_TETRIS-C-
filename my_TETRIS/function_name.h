@@ -37,6 +37,8 @@ void movedown();
 
 void moveup();
 
+void turnR();
+
 void fix();
 
 //블럭 스폰

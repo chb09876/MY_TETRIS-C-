@@ -34,6 +34,7 @@ bool move_D;//0=not,1=allow
 bool spawn_point;//0 or 1(normal)
 char spawn_arr[1000];
 int current_block;
+int turn_cnt;
 
 
 

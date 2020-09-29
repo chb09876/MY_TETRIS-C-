@@ -21,10 +21,10 @@ void gotoxy(short x, short y) {
 //디버깅
 void debug() {
 	printf("block num=%d\n", current_block);
-	printf("block[0].y=%d block[0].x=%d\n", block[0].y, block[0].x);
-	printf("block[1].y=%d block[1].x=%d\n", block[1].y, block[1].x);
-	printf("block[2].y=%d block[2].x=%d\n", block[2].y, block[2].x);
-	printf("block[3].y=%d block[3].x=%d\n", block[3].y, block[3].x);
+	printf("block[0].y=%d block[0].x=%d \n", block[0].y, block[0].x);
+	printf("block[1].y=%d block[1].x=%d \n", block[1].y, block[1].x);
+	printf("block[2].y=%d block[2].x=%d \n", block[2].y, block[2].x);
+	printf("block[3].y=%d block[3].x=%d \n", block[3].y, block[3].x);
 	printf("spawn_point=%d\n", spawn_point);
 	printf("move_R=%d\n", move_R);
 	printf("move_L=%d\n", move_L);
@@ -53,7 +53,6 @@ void Tetris() {
 	cls;
 	char deb;
 	init_update();
-	spawn_block(3);
 	show_T();
 	debug();
 	while (1) {
@@ -72,6 +71,9 @@ void Tetris() {
 			break;
 		case ' ':
 			fix();
+			break;
+		case 'e':
+			turnR();
 			break;
 		default:
 			spawn_block(deb-'0');
@@ -133,7 +135,64 @@ void moveup() {
 	info_update();
 }
 void turnR() {
-	
+	switch (current_block) {
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		if (turn_cnt == 0) {
+			for (int i = 0; i < 4; i++) {
+				field[block[i].y][block[i].x] = field_void;
+			}
+			field[block[1].y][block[1].x] = field_controled;
+			field[block[1].y - 1][block[1].x] = field_controled;
+			field[block[1].y + 1][block[1].x] = field_controled;
+			field[block[1].y][block[1].x + 1] = field_controled;
+			turn_cnt++;
+		}
+		else if (turn_cnt == 1) {
+			for (int i = 0; i < 4; i++) {
+				field[block[i].y][block[i].x] = field_void;
+			}
+			field[block[1].y][block[1].x] = field_controled;
+			field[block[1].y][block[1].x-1] = field_controled;
+			field[block[1].y][block[1].x+1] = field_controled;
+			field[block[1].y+1][block[1].x] = field_controled;
+			turn_cnt++;
+		}
+		else if (turn_cnt == 2) {
+			for (int i = 0; i < 4; i++) {
+				field[block[i].y][block[i].x] = field_void;
+			}
+			field[block[2].y][block[2].x] = field_controled;
+			field[block[2].y - 1][block[2].x] = field_controled;
+			field[block[2].y + 1][block[2].x] = field_controled;
+			field[block[2].y][block[2].x -1] = field_controled;
+			turn_cnt++;
+		}
+		else if(turn_cnt==3){
+			for (int i = 0; i < 4; i++) {
+				field[block[i].y][block[i].x] = field_void;
+			}
+			field[block[2].y][block[2].x] = field_controled;
+			field[block[2].y - 1][block[2].x] = field_controled;
+			field[block[2].y][block[2].x-1] = field_controled;
+			field[block[2].y][block[2].x + 1] = field_controled;
+			turn_cnt++;
+		}
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	}
+	turn_cnt %= 4;
+	info_update();
 }
 /*정보갱신함수*/
 
@@ -148,6 +207,7 @@ void init_update() {
 	move_R = 1;
 	move_L = 1;
 	move_D = 1;
+	spawn_point = 1;
 	//블록스폰배열설정
 	srand(time(NULL));
 	for (int i = 0; i < 1000; i+=7) {
@@ -225,7 +285,7 @@ void info_update() {
 			move_L = 1;
 	}
 	//스폰포인트설정
-	for (int i = 0; i < 10; i++) {
+	for (int i = 3; i < 6; i++) {
 		if (field[2][i].shape == 1 && field[2][i].control == 0) {
 			spawn_point = 0;
 			break;
@@ -233,12 +293,15 @@ void info_update() {
 		else
 			spawn_point = 1;
 	}
+	
 }
 
 //컨트롤 해제/픽스
 void fix() {
 	for (int i = 0; i < 4; i++) {
 		field[block[i].y][block[i].x].control = 0;
+		block[i].y = 0;
+		block[i].x = 0;
 	}
 	current_block = 0;
 	info_update();
@@ -311,6 +374,7 @@ void spawn_block(int num) {
 		field[spawn_point][5] = field_controled;
 		break;
 	}
+	turn_cnt = 0;
 	info_update();
 }
 
